@@ -1,23 +1,19 @@
-const cors = require('cors'); 
-
 const express = require('express');
-const app = express();
-const requestRoutes = require('./routes/request.routes');
+const cors = require('cors');
+
 const authRoutes = require('./routes/auth.routes');
+const requestRoutes = require('./routes/request.routes');
+
+const app = express();
 
 app.use(cors());
-
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
-// Test endpoint
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'Backend is working!' });
-});
-
-app.use('/api/requests', requestRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/requests', requestRoutes);
 
-app.listen(3000, () => {
-  console.log('Server running on port 3000');
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
